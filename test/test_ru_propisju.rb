@@ -87,7 +87,7 @@ class TestRuPropisju < Test::Unit::TestCase
 
   def test_propisju_dollarov
     assert_equal "сто двадцать один доллар пятьдесят один цент", RuPropisju.dollarov(121.51)
-    assert_equal "сто двадцять один долар п'ятьдесят один цент", RuPropisju.dollarov(121.51, :ua)
+    assert_equal "сто двадцять один долар п'ятдесят один цент", RuPropisju.dollarov(121.51, :ua)
   end
 
   def test_propisju_euro
@@ -225,11 +225,11 @@ class TestRuPropisju < Test::Unit::TestCase
 
 
     # ukrainian locale
-    assert_equal "п'ятьсот двадцять три", RuPropisju.propisju(523, 1, :ua)
+    assert_equal "п'ятсот двадцять три", RuPropisju.propisju(523, 1, :ua)
     assert_equal "шість тисяч сімсот двадцять сім", RuPropisju.propisju(6727, 1, :ua)
-    assert_equal "вісім мільйонів шістсот п'ятьдесят два", RuPropisju.propisju(8000652, 1, :ua)
-    assert_equal "вісім мільйонів шістсот п'ятьдесят дві", RuPropisju.propisju(8000652, 2, :ua)
-    assert_equal "вісім мільйонів шістсот п'ятьдесят два", RuPropisju.propisju(8000652, 3, :ua)
+    assert_equal "вісім мільйонів шістсот п'ятдесят два", RuPropisju.propisju(8000652, 1, :ua)
+    assert_equal "вісім мільйонів шістсот п'ятдесят дві", RuPropisju.propisju(8000652, 2, :ua)
+    assert_equal "вісім мільйонів шістсот п'ятдесят два", RuPropisju.propisju(8000652, 3, :ua)
     assert_equal "сорок п'ять", RuPropisju.propisju(45, 1, :ua)
     assert_equal "п'ять", RuPropisju.propisju(5, 1, :ua)
     assert_equal "шістсот дванадцять", RuPropisju.propisju(612, 1, :ua)
@@ -602,12 +602,12 @@ class TestRuPropisju < Test::Unit::TestCase
     assert_equal "нулём швейцарскими франками нулём сантимами", RuPropisju.francov(0, :ru_from)
 
     # ua locale
-    assert_equal "сто двадцять три швейцарських франків", RuPropisju.francov(123, :ua)
-    assert_equal "триста сорок три швейцарських франків двадцять сантимів", RuPropisju.francov(343.20, :ua)
-    assert_equal "сорок два сантима", RuPropisju.francov(0.4187, :ua)
-    assert_equal "триста тридцять два швейцарських франків", RuPropisju.francov(331.995, :ua)
+    assert_equal "сто двадцять три швейцарських франки", RuPropisju.francov(123, :ua)
+    assert_equal "триста сорок три швейцарських франки двадцять сантимів", RuPropisju.francov(343.20, :ua)
+    assert_equal "сорок два сантими", RuPropisju.francov(0.4187, :ua)
+    assert_equal "триста тридцять два швейцарських франки", RuPropisju.francov(331.995, :ua)
     assert_equal "один швейцарський франк", RuPropisju.francov(1, :ua)
-    assert_equal "три швейцарських франків чотирнадцять сантимів", RuPropisju.francov(3.14, :ua)
+    assert_equal "три швейцарських франки чотирнадцять сантимів", RuPropisju.francov(3.14, :ua)
   end
 
   def test_yuanej
@@ -655,12 +655,12 @@ class TestRuPropisju < Test::Unit::TestCase
     assert_equal "нулём юанями нулём фэнями", RuPropisju.yuanej(0, :ru_from)
 
     # ua locale
-    assert_equal "сто двадцять три юаня", RuPropisju.yuanej(123, :ua)
-    assert_equal "триста сорок три юаня двадцять феней", RuPropisju.yuanej(343.20, :ua)
-    assert_equal "сорок два феня", RuPropisju.yuanej(0.4187, :ua)
-    assert_equal "триста тридцять два юаня", RuPropisju.yuanej(331.995, :ua)
+    assert_equal "сто двадцять три юані", RuPropisju.yuanej(123, :ua)
+    assert_equal "триста сорок три юані двадцять феней", RuPropisju.yuanej(343.20, :ua)
+    assert_equal "сорок два фені", RuPropisju.yuanej(0.4187, :ua)
+    assert_equal "триста тридцять два юані", RuPropisju.yuanej(331.995, :ua)
     assert_equal "один юань", RuPropisju.yuanej(1, :ua)
-    assert_equal "три юаня чотирнадцять феней", RuPropisju.yuanej(3.14, :ua)
+    assert_equal "три юані чотирнадцять феней", RuPropisju.yuanej(3.14, :ua)
   end
 
   def test_sterlingov
@@ -708,12 +708,12 @@ class TestRuPropisju < Test::Unit::TestCase
     assert_equal "нулём фунтами стерлингов нулём пенсами", RuPropisju.sterlingov(0, :ru_from)
 
     # ua locale
-    assert_equal "сто двадцять три фунта стерлінгів", RuPropisju.sterlingov(123, :ua)
-    assert_equal "триста сорок три фунта стерлінгів двадцять пенсів", RuPropisju.sterlingov(343.20, :ua)
+    assert_equal "сто двадцять три фунти стерлінгів", RuPropisju.sterlingov(123, :ua)
+    assert_equal "триста сорок три фунти стерлінгів двадцять пенсів", RuPropisju.sterlingov(343.20, :ua)
     assert_equal "сорок два пенса", RuPropisju.sterlingov(0.4187, :ua)
-    assert_equal "триста тридцять два фунта стерлінгів", RuPropisju.sterlingov(331.995, :ua)
+    assert_equal "триста тридцять два фунти стерлінгів", RuPropisju.sterlingov(331.995, :ua)
     assert_equal "один фунт стерлінгів", RuPropisju.sterlingov(1, :ua)
-    assert_equal "три фунта стерлінгів чотирнадцять пенсів", RuPropisju.sterlingov(3.14, :ua)
+    assert_equal "три фунти стерлінгів чотирнадцять пенсів", RuPropisju.sterlingov(3.14, :ua)
   end
 
   def test_hk_dollarov
@@ -814,10 +814,10 @@ class TestRuPropisju < Test::Unit::TestCase
     assert_equal "нулём иенами нулём сенами", RuPropisju.yen(0, :ru_from)
 
     # ua locale
-    assert_equal "сто двадцять три ієни", RuPropisju.yen(123, :ua)
-    assert_equal "триста сорок три ієни двадцять сінів", RuPropisju.yen(343.20, :ua)
+    assert_equal "сто двадцять три єни", RuPropisju.yen(123, :ua)
+    assert_equal "триста сорок три єни двадцять сенів", RuPropisju.yen(343.20, :ua)
     assert_equal "сорок два сіна", RuPropisju.yen(0.4187, :ua)
-    assert_equal "триста тридцять дві ієни", RuPropisju.yen(331.995, :ua)
+    assert_equal "триста тридцять дві єни", RuPropisju.yen(331.995, :ua)
     assert_equal "одна єна", RuPropisju.yen(1, :ua)
     assert_equal "три єни чотирнадцять сенів", RuPropisju.yen(3.14, :ua)
   end
