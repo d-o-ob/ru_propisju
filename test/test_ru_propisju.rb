@@ -136,6 +136,7 @@ class TestRuPropisju < Test::Unit::TestCase
       :hkd_integral, :hkd_fraction,
       :jpy_integral, :jpy_fraction,
       :try_integral, :try_fraction,
+      :byn_integral, :byn_fraction
     ]
     all_keys = (numeric_keys + bignum_keys + currency_fractions)
     missing = Hash.new(){|h,k| h[k] = []}
@@ -873,6 +874,59 @@ class TestRuPropisju < Test::Unit::TestCase
     assert_equal "триста тридцять дві турецькі ліри", RuPropisju.lir(331.995, :ua)
     assert_equal "одна турецька ліра", RuPropisju.lir(1, :ua)
     assert_equal "три турецькі ліри чотирнадцять курушів", RuPropisju.lir(3.14, :ua)
+  end
+
+  def test_bel_rublej
+    assert_equal "сто двадцать три белорусских рубля", RuPropisju.bel_rublej(123)
+    assert_equal "сто двадцать четыре белорусских рубля", RuPropisju.bel_rublej(124)
+    assert_equal "триста сорок три белорусских рубля двадцать копеек", RuPropisju.bel_rublej(343.20)
+    assert_equal "сорок две копейки", RuPropisju.bel_rublej(0.4187)
+    assert_equal "триста тридцать два белорусских рубля", RuPropisju.bel_rublej(331.995)
+    assert_equal "триста тридцать один белорусский рубль девяносто девять копеек", RuPropisju.bel_rublej(331.985)
+    assert_equal "один белорусский рубль", RuPropisju.bel_rublej(1)
+    assert_equal "три белорусских рубля четырнадцать копеек", RuPropisju.bel_rublej(3.14)
+    assert_equal "ноль белорусских рублей ноль копеек", RuPropisju.bel_rublej(0)
+
+    # ru locale предложный падеж
+    assert_equal "ста двадцати трёх белорусских рублях", RuPropisju.bel_rublej(123, :ru_in)
+    assert_equal "ста двадцати четырёх белорусских рублях", RuPropisju.bel_rublej(124, :ru_in)
+    assert_equal "трёхстах сорока трёх белорусских рублях двадцати копейках", RuPropisju.bel_rublej(343.20, :ru_in)
+    assert_equal "сорока двух копейках", RuPropisju.bel_rublej(0.4187, :ru_in)
+    assert_equal "трёхстах тридцати двух белорусских рублях", RuPropisju.bel_rublej(331.995, :ru_in)
+    assert_equal "трёхстах тридцати одном белорусском рубле девяноста девяти копейках", RuPropisju.bel_rublej(331.985, :ru_in)
+    assert_equal "одном белорусском рубле", RuPropisju.bel_rublej(1, :ru_in)
+    assert_equal "трёх белорусских рублях четырнадцати копейках", RuPropisju.bel_rublej(3.14, :ru_in)
+    assert_equal "нуле белорусских рублях нуле копейках", RuPropisju.bel_rublej(0, :ru_in)
+
+    # ru locale родительный падеж
+    assert_equal 'ста двадцати трёх белорусских рублей',                               RuPropisju.bel_rublej(123, :ru_gen)
+    assert_equal 'ста двадцати четырёх белорусских рублей',                            RuPropisju.bel_rublej(124, :ru_gen)
+    assert_equal 'трёхсот сорока трёх белорусских рублей двадцати копеек',             RuPropisju.bel_rublej(343.20, :ru_gen)
+    assert_equal 'сорока двух копеек',                                                 RuPropisju.bel_rublej(0.4187, :ru_gen)
+    assert_equal 'трёхсот тридцати двух белорусских рублей',                           RuPropisju.bel_rublej(331.995, :ru_gen)
+    assert_equal 'трёхсот тридцати одного белорусского рубля девяноста девяти копеек', RuPropisju.bel_rublej(331.985, :ru_gen)
+    assert_equal 'одного белорусского рубля',                                         RuPropisju.bel_rublej(1, :ru_gen)
+    assert_equal 'трёх белорусских рублей четырнадцати копеек',                        RuPropisju.bel_rublej(3.14, :ru_gen)
+    assert_equal 'нуля белорусских рублей нуля копеек',                                RuPropisju.bel_rublej(0, :ru_gen)
+
+    # ru locale творительный падеж
+    assert_equal "ста двадцатью тремя белорусскими рублями", RuPropisju.bel_rublej(123, :ru_from)
+    assert_equal "ста двадцатью четырьмя белорусскими рублями", RuPropisju.bel_rublej(124, :ru_from)
+    assert_equal "тремястами сорока тремя белорусскими рублями двадцатью копейками", RuPropisju.bel_rublej(343.20, :ru_from)
+    assert_equal "сорока двумя копейками", RuPropisju.bel_rublej(0.4187, :ru_from)
+    assert_equal "тремястами тридцатью двумя белорусскими рублями", RuPropisju.bel_rublej(331.995, :ru_from)
+    assert_equal "тремястами тридцатью одним белорусским рублем девяноста девятью копейками", RuPropisju.bel_rublej(331.985, :ru_from)
+    assert_equal "одним белорусским рублем", RuPropisju.bel_rublej(1, :ru_from)
+    assert_equal "тремя белорусскими рублями четырнадцатью копейками", RuPropisju.bel_rublej(3.14, :ru_from)
+    assert_equal "нулём белорусскими рублями нулём копейками", RuPropisju.bel_rublej(0, :ru_from)
+
+    # ua locale
+    assert_equal "сто двадцять три білоруського рубля", RuPropisju.bel_rublej(123, :ua)
+    assert_equal "триста сорок три білоруського рубля двадцять копійок", RuPropisju.bel_rublej(343.20, :ua)
+    assert_equal "сорок дві копійки", RuPropisju.bel_rublej(0.4187, :ua)
+    assert_equal "триста тридцять два білоруського рубля", RuPropisju.bel_rublej(331.995, :ua)
+    assert_equal "один білоруський рубль", RuPropisju.bel_rublej(1, :ua)
+    assert_equal "три білоруського рубля чотирнадцять копійок", RuPropisju.bel_rublej(3.14, :ua)
   end
 
   def test_kopeek
