@@ -136,7 +136,9 @@ class TestRuPropisju < Test::Unit::TestCase
       :hkd_integral, :hkd_fraction,
       :jpy_integral, :jpy_fraction,
       :try_integral, :try_fraction,
-      :byn_integral, :byn_fraction
+      :byn_integral, :byn_fraction,
+      :aed_integral, :aed_fraction,
+      :inr_integral, :inr_fraction
     ]
     all_keys = (numeric_keys + bignum_keys + currency_fractions)
     missing = Hash.new(){|h,k| h[k] = []}
@@ -967,6 +969,112 @@ class TestRuPropisju < Test::Unit::TestCase
     assert_equal "32 копійки", RuPropisju.kopeek(32, :ua)
     assert_equal "21 копійка", RuPropisju.kopeika(21, :ua)
     assert_equal "3 копійки", RuPropisju.kopeiki(3, :ua)
+  end
+
+  def test_dirhamov
+    assert_equal "сто двадцать три дирхама", RuPropisju.dirhamov(123)
+    assert_equal "сто двадцать четыре дирхама", RuPropisju.dirhamov(124)
+    assert_equal "триста сорок три дирхама двадцать филсов", RuPropisju.dirhamov(343.20)
+    assert_equal "сорок два филса", RuPropisju.dirhamov(0.4187)
+    assert_equal "триста тридцать два дирхама", RuPropisju.dirhamov(331.995)
+    assert_equal "триста тридцать один дирхам девяносто девять филсов", RuPropisju.dirhamov(331.985)
+    assert_equal "один дирхам", RuPropisju.dirhamov(1)
+    assert_equal "три дирхама четырнадцать филсов", RuPropisju.dirhamov(3.14)
+    assert_equal "ноль дирхамов ноль филсов", RuPropisju.dirhamov(0)
+
+    # ru locale предложный падеж
+    assert_equal "ста двадцати трёх дирхамах", RuPropisju.dirhamov(123, :ru_in)
+    assert_equal "ста двадцати четырёх дирхамах", RuPropisju.dirhamov(124, :ru_in)
+    assert_equal "трёхстах сорока трёх дирхамах двадцати филсах", RuPropisju.dirhamov(343.20, :ru_in)
+    assert_equal "сорока двух филсах", RuPropisju.dirhamov(0.4187, :ru_in)
+    assert_equal "трёхстах тридцати двух дирхамах", RuPropisju.dirhamov(331.995, :ru_in)
+    assert_equal "трёхстах тридцати одном дирхаме девяноста девяти филсах", RuPropisju.dirhamov(331.985, :ru_in)
+    assert_equal "одном дирхаме", RuPropisju.dirhamov(1, :ru_in)
+    assert_equal "трёх дирхамах четырнадцати филсах", RuPropisju.dirhamov(3.14, :ru_in)
+    assert_equal "нуле дирхамах нуле филсах", RuPropisju.dirhamov(0, :ru_in)
+
+    # ru locale родительный падеж
+    assert_equal 'ста двадцати трёх дирхамов',                               RuPropisju.dirhamov(123, :ru_gen)
+    assert_equal 'ста двадцати четырёх дирхамов',                            RuPropisju.dirhamov(124, :ru_gen)
+    assert_equal 'трёхсот сорока трёх дирхамов двадцати филсов',             RuPropisju.dirhamov(343.20, :ru_gen)
+    assert_equal 'сорока двух филсов',                                                   RuPropisju.dirhamov(0.4187, :ru_gen)
+    assert_equal 'трёхсот тридцати двух дирхамов',                           RuPropisju.dirhamov(331.995, :ru_gen)
+    assert_equal 'трёхсот тридцати одного дирхама девяноста девяти филсов',  RuPropisju.dirhamov(331.985, :ru_gen)
+    assert_equal 'одного дирхама',                                           RuPropisju.dirhamov(1, :ru_gen)
+    assert_equal 'трёх дирхамов четырнадцати филсов',                        RuPropisju.dirhamov(3.14, :ru_gen)
+    assert_equal 'нуля дирхамов нуля филсов',                                RuPropisju.dirhamov(0, :ru_gen)
+
+    # ru locale творительный падеж
+    assert_equal "ста двадцатью тремя дирхамами", RuPropisju.dirhamov(123, :ru_from)
+    assert_equal "ста двадцатью четырьмя дирхамами", RuPropisju.dirhamov(124, :ru_from)
+    assert_equal "тремястами сорока тремя дирхамами двадцатью филсами", RuPropisju.dirhamov(343.20, :ru_from)
+    assert_equal "сорока двумя филсами", RuPropisju.dirhamov(0.4187, :ru_from)
+    assert_equal "тремястами тридцатью двумя дирхамами", RuPropisju.dirhamov(331.995, :ru_from)
+    assert_equal "тремястами тридцатью одним дирхамом девяноста девятью филсами", RuPropisju.dirhamov(331.985, :ru_from)
+    assert_equal "одним дирхамом", RuPropisju.dirhamov(1, :ru_from)
+    assert_equal "тремя дирхамами четырнадцатью филсами", RuPropisju.dirhamov(3.14, :ru_from)
+    assert_equal "нулём дирхамами нулём филсами", RuPropisju.dirhamov(0, :ru_from)
+
+    # ua locale
+    assert_equal "сто двадцять три дирхама", RuPropisju.dirhamov(123, :ua)
+    assert_equal "триста сорок три дирхама двадцять філсів", RuPropisju.dirhamov(343.20, :ua)
+    assert_equal "сорок два філса", RuPropisju.dirhamov(0.4187, :ua)
+    assert_equal "триста тридцять два дирхама", RuPropisju.dirhamov(331.995, :ua)
+    assert_equal "один дирхам", RuPropisju.dirhamov(1, :ua)
+    assert_equal "три дирхама чотирнадцять філсів", RuPropisju.dirhamov(3.14, :ua)
+  end
+
+  def test_rupij
+    assert_equal "сто двадцать три индийские рупии", RuPropisju.rupij(123)
+    assert_equal "сто двадцать четыре индийские рупии", RuPropisju.rupij(124)
+    assert_equal "триста сорок три индийские рупии двадцать пайсов", RuPropisju.rupij(343.20)
+    assert_equal "сорок два пайса", RuPropisju.rupij(0.4187)
+    assert_equal "триста тридцать две индийские рупии", RuPropisju.rupij(331.995)
+    assert_equal "триста тридцать одна индийская рупия девяносто девять пайсов", RuPropisju.rupij(331.985)
+    assert_equal "одна индийская рупия", RuPropisju.rupij(1)
+    assert_equal "три индийские рупии четырнадцать пайсов", RuPropisju.rupij(3.14)
+    assert_equal "ноль индийских рупий ноль пайсов", RuPropisju.rupij(0)
+
+    # ru locale предложный падеж
+    assert_equal "ста двадцати трёх индийских рупий", RuPropisju.rupij(123, :ru_in)
+    assert_equal "ста двадцати четырёх индийских рупий", RuPropisju.rupij(124, :ru_in)
+    assert_equal "трёхстах сорока трёх индийских рупий двадцати пайсах", RuPropisju.rupij(343.20, :ru_in)
+    assert_equal "сорока двух пайсах", RuPropisju.rupij(0.4187, :ru_in)
+    assert_equal "трёхстах тридцати двух индийских рупий", RuPropisju.rupij(331.995, :ru_in)
+    assert_equal "трёхстах тридцати одной индийской рупии девяноста девяти пайсах", RuPropisju.rupij(331.985, :ru_in)
+    assert_equal "одной индийской рупии", RuPropisju.rupij(1, :ru_in)
+    assert_equal "трёх индийских рупий четырнадцати пайсах", RuPropisju.rupij(3.14, :ru_in)
+    assert_equal "нуле индийских рупиях нуле пайсах", RuPropisju.rupij(0, :ru_in)
+
+    # ru locale родительный падеж
+    assert_equal 'ста двадцати трёх индийских рупий',                              RuPropisju.rupij(123, :ru_gen)
+    assert_equal 'ста двадцати четырёх индийских рупий',                           RuPropisju.rupij(124, :ru_gen)
+    assert_equal 'трёхсот сорока трёх индийских рупий двадцати пайсов',             RuPropisju.rupij(343.20, :ru_gen)
+    assert_equal 'сорока двух пайсов',                                           RuPropisju.rupij(0.4187, :ru_gen)
+    assert_equal 'трёхсот тридцати двух индийских рупий',                          RuPropisju.rupij(331.995, :ru_gen)
+    assert_equal 'трёхсот тридцати одной индийской рупии девяноста девяти пайсов', RuPropisju.rupij(331.985, :ru_gen)
+    assert_equal 'одной индийской рупии',                                         RuPropisju.rupij(1, :ru_gen)
+    assert_equal 'трёх индийских рупий четырнадцати пайсов',                        RuPropisju.rupij(3.14, :ru_gen)
+    assert_equal 'нуля индийских рупий нуля пайсов',                                RuPropisju.rupij(0, :ru_gen)
+
+    # ru locale творительный падеж
+    assert_equal "ста двадцатью тремя индийскими рупиями", RuPropisju.rupij(123, :ru_from)
+    assert_equal "ста двадцатью четырьмя индийскими рупиями", RuPropisju.rupij(124, :ru_from)
+    assert_equal "тремястами сорока тремя индийскими рупиями двадцатью пайсами", RuPropisju.rupij(343.20, :ru_from)
+    assert_equal "сорока двумя пайсами", RuPropisju.rupij(0.4187, :ru_from)
+    assert_equal "тремястами тридцатью двумя индийскими рупиями", RuPropisju.rupij(331.995, :ru_from)
+    assert_equal "тремястами тридцатью одной индийской рупией девяноста девятью пайсами", RuPropisju.rupij(331.985, :ru_from)
+    assert_equal "одной индийской рупией", RuPropisju.rupij(1, :ru_from)
+    assert_equal "тремя индийскими рупиями четырнадцатью пайсами", RuPropisju.rupij(3.14, :ru_from)
+    assert_equal "нулём индийскими рупиями нулём пайсами", RuPropisju.rupij(0, :ru_from)
+
+    # ua locale
+    assert_equal "сто двадцять три індійські рупії", RuPropisju.rupij(123, :ua)
+    assert_equal "триста сорок три індійські рупії двадцять пайсів", RuPropisju.rupij(343.20, :ua)
+    assert_equal "сорок два пайса", RuPropisju.rupij(0.4187, :ua)
+    assert_equal "триста тридцять дві індійські рупії", RuPropisju.rupij(331.995, :ua)
+    assert_equal "одна індійська рупія", RuPropisju.rupij(1, :ua)
+    assert_equal "три індійські рупії чотирнадцять пайсів", RuPropisju.rupij(3.14, :ua)
   end
 
   def test_options
